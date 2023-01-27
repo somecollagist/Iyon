@@ -16,7 +16,8 @@ CFLG := -Wall					\
 		-nostdinc				\
 		-nostdlib				\
 		-mno-red-zone			\
-		-Ibootboot/dist
+		-Ibootboot/dist			\
+		-Isrc
 CSRC := $(shell find $(SRC) -name "*.c")
 CTAR := $(patsubst $(SRC)/%,$(BIN)/%,$(patsubst %.c,%.o,$(CSRC)))
 CIDR := $(shell dirname $(shell echo $(CSRC) | tr ' ' '\n' | sort -u | xargs))

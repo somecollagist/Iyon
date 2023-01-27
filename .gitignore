@@ -8,4 +8,5 @@ OVMF.fd
 ## Generated files
 bin/
 *.img
+iso/sys/core
 disassembly.txt
