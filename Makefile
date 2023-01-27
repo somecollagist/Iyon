@@ -50,6 +50,7 @@ build: $(ASMTAR) $(CTAR)
 	@readelf -hls $(BINLOC) > disassembly.txt
 	@echo "Stripped and disassembled"
 	@echo "Building disk image..."
+	@mkdir -p $(ISO)/sys
 	@cp $(BINLOC) $(ISO)/sys/core
 	@./bootboot/mkbootimg/mkbootimg iyon.json iyon.img
 	@echo "Disk image built"
@@ -67,7 +68,7 @@ $(BIN)/%.o: $(SRC)/%.c
 
 run:
 	@echo " -- Run -- "
-	@qemu-system-x86_64 -m 1G iyon.img
+	@qemu-system-x86_64 -m 1G -hda iyon.img
 	@echo " -- Run Complete -- "
 
 clean:
