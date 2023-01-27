@@ -1,0 +1,11 @@
+## IDE directories
+vscode/
+
+## Build dependencies
+bootboot/
+OVMF.fd
+
+## Generated files
+bin/
+*.img
+disassembly.txt

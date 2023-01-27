@@ -1,0 +1,30 @@
+{
+	"diskguid" : "00000000-0000-0000-0000-000000000000",
+	"disksize" : 128,
+	"align" : 1024,
+	"iso9660" : true,
+	"config" : "iso/boot/sys/config",
+	"initrd" : 
+	{
+		"type" : "tar",
+		"gzip" : true,
+		"directory" : "iso"
+	},
+	"partitions" :
+	[
+		{
+			"type" : "boot",
+			"size" : 16
+		},
+		{
+			"type" : "ext2",
+			"size" : 128,
+			"name" : "Linux xchg"
+		},
+		{
+			"type" : "ntfs",
+			"size" : 128,
+			"name" : "Windows xchg"
+		}
+	]
+}
