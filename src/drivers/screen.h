@@ -43,19 +43,18 @@ typedef struct
 
 /**
  * @brief Initialises the screen
- * 
  */
-void ScreenInit();
+void InitScreen();
 
 // Defined here because that's where the logic is
 /**
  * @brief The number of characters the terminal can support vertically
  */
-extern int term_height;
+extern uint8_t term_height;
 /**
  * @brief The number of characters the terminal can support horizontally
  */
-extern int term_width;
+extern uint8_t term_width;
 
 /**
  * @brief Writes a character to a location on the screen

@@ -10,6 +10,7 @@ ASMC := nasm
 LD := ld
 
 CFLG := -Wall					\
+		-g						\
 		-fpic					\
 		-ffreestanding			\
 		-fno-stack-protector	\
@@ -22,6 +23,12 @@ CSRC := $(shell find $(SRC) -name "*.c")
 CTAR := $(patsubst $(SRC)/%,$(BIN)/%,$(patsubst %.c,%.o,$(CSRC)))
 CIDR := $(shell dirname $(shell echo $(CSRC) | tr ' ' '\n' | sort -u | xargs))
 CINC := $(addprefix -I ,$(CIDR))
+
+ASMFLG := -f elf64
+ASMSRC := $(shell find $(SRC) -name "*.asm")
+ASMTAR := $(patsubst $(SRC)/%,$(BIN)/%,$(patsubst %.asm,%.o,$(ASMSRC)))
+ASMIDR := $(shell dirname $(shell echo $(ASMSRC) | tr ' ' '\n' | sort -u | xargs))
+ASMINC := $(addprefix -i ,$(ASMIDR))
 
 LDFLG :=	-nostdlib		\
 			-n				\
@@ -45,9 +52,11 @@ build: $(ASMTAR) $(CTAR)
 	@$(LD) -r -b binary -o $(BIN)/font.o $(SRC)/font.psf
 	@$(LD) $(LDFLG) $^ $(BIN)/font.o -o $(BINLOC)
 	@echo "Linking complete"
-	@echo "Running strip and generating disassembly..."
-	@strip $(STRIPFLG) $(BINLOC)
-	@readelf -hls $(BINLOC) > disassembly.txt
+	@echo "Generating disassembly..."
+	# @strip $(STRIPFLG) $(BINLOC)
+	@rm -rf disassembly.txt
+	@readelf -hls $(BINLOC) >> disassembly.txt
+	@objdump -d $(BINLOC) >> disassembly.txt
 	@echo "Stripped and disassembled"
 	@echo "Building disk image..."
 	@mkdir -p $(ISO)/sys

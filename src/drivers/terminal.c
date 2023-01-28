@@ -2,10 +2,16 @@
 
 #include <drivers/screen.h>
 
-uint8_t column = 0;
-uint8_t row = 0;
+uint8_t column;
+uint8_t row;
 
 const uint8_t TABDEPTH = 4; 
+
+void InitTerminal()
+{
+	column = 0;
+	row = 0;
+}
 
 void AssertWriter()
 {
@@ -20,7 +26,7 @@ void AssertWriter()
 	}
 }
 
-void print(char *s, Colour foreground)
+void print(char *s, Colour foreground, Colour background)
 {
 	while(*s)
 	{
@@ -41,7 +47,7 @@ void print(char *s, Colour foreground)
 				break;
 
 			default:
-				putc(*s, column++, row, foreground, BLACK);
+				putc(*s, column++, row, foreground, background);
 				break;
 		}
 		s++;

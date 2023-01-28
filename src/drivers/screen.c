@@ -26,12 +26,12 @@ typedef struct {
 extern volatile unsigned char _binary___src_font_psf_start;
 
 psf2_t* font;								// Instance of currently laoded font (see src/font.psf)
-int bytesperline;							// Number of bytes per line of a glyph
+uint8_t bytesperline;							// Number of bytes per line of a glyph
 
-int term_height;
-int term_width;
+uint8_t term_height;
+uint8_t term_width;
 
-void ScreenInit()
+void InitScreen()
 {
 	font			= (psf2_t*)&_binary___src_font_psf_start;
 	bytesperline	= (font->width+7)/8;
@@ -42,14 +42,14 @@ void ScreenInit()
 
 void putpixel(int x, int y, Colour col)
 {
-	unsigned offset = ((y)*bootboot.fb_scanline)+4*x;							// Calculate framebuffer byte offset
+	uint32_t offset = ((y)*bootboot.fb_scanline)+4*x;							// Calculate framebuffer byte offset
 	uint32_t* pixel = (uint32_t*)(&fb + offset);								// Reference to pixel (include framebuffer)
 	*pixel = (col.Red << 16) | (col.Green << 8) | (col.Blue);					// Write colour data
 }
 
 void putc(char c, int x, int y, Colour foregorund, Colour background)
 {
-	unsigned char *glyphline = (unsigned char*)&_binary___src_font_psf_start	// Font location
+	uint8_t *glyphline = (uint8_t*)&_binary___src_font_psf_start				// Font location
 							+ font->headersize									// Skip past the header
 							+ (c > 0 && c < font->numglyph ? c : 0)				// Find the offset within the font
 							* font->bytesperglyph;								// Multiply by offset scalar

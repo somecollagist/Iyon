@@ -1,21 +1,20 @@
 #include <types.h>
+#include <cpu/gdt/gdt.h>
+#include <cpu/interrupts/interrupts.h>
 #include <drivers/screen.h>
 #include <drivers/terminal.h>
 
-#include <bootboot.h>
-
-#define rect(startx, col)					\
-for(int x = startx; x < startx+20; x++)		\
-{											\
-	for(int y = 20; y < 40; y++)			\
-	{										\
-		putpixel(x, y, col);				\
-	}										\
-}
-
+// Kernel entry point from BOOTBOOT
 void _start()
 {
-	ScreenInit();
-	print_prc("Booting Iyon...");
+	InitScreen();
+	InitTerminal();
+	print_prc("Booting Iyon...\n");
+	InitGDT();
+	InitIDT();
+	InitIRQ();
+
+	int x = 12/0;
+	
 	while(true);
 }
