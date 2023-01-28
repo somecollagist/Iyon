@@ -68,7 +68,7 @@ $(BIN)/%.o: $(SRC)/%.c
 
 run:
 	@echo " -- Run -- "
-	@qemu-system-x86_64 -m 1G -hda iyon.img
+	@bochs -q
 	@echo " -- Run Complete -- "
 
 clean:

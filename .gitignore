@@ -1,12 +1,16 @@
 ## IDE directories
-vscode/
+.vscode/
 
 ## Build dependencies
 bootboot/
 OVMF.fd
 
-## Generated files
+## Binaries
 bin/
 *.img
 iso/sys/core
+
+## Generated files
+bochs.log
+bx_enh_dbg.ini
 disassembly.txt
