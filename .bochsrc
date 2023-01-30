@@ -3,7 +3,8 @@ boot: cdrom
 cpuid: vendor_string=GenuineIntel
 memory: guest=16, host=16
 magic_break: enabled=1
-cpu: reset_on_triple_fault=0
+cpu: reset_on_triple_fault=0, count=8
 display_library: x, options = "gui_debug"
 log: bochs.log
 memory: guest=512, host=512
+clock: sync=realtime, time0=local

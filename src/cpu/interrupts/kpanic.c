@@ -3,6 +3,8 @@
 #include <types.h>
 #include <drivers/terminal.h>
 
+#include <bootboot.h>
+
 char digits[] = {
 	'0', '1', '2', '3',
 	'4', '5', '6', '7',
@@ -32,7 +34,8 @@ char buf_r13[19];
 char buf_r14[19];
 char buf_r15[19];
 
-extern const char* kpart;
+extern BOOTBOOT bootboot;					// See bootboot.h
+extern uint8_t fb;							// Linear mapped framebuffer
 
 static inline void kp_toHexString(char* buf, uint64_t num)
 {
@@ -45,7 +48,7 @@ static inline void kp_toHexString(char* buf, uint64_t num)
 	buf[18] = '\0';
 }
 
-#define kp_print(s) print(s, WHITE, RED)
+#define kp_print(s) print(s, RED, BLACK)
 #define MAXFRAMES 4
 
 void kpanic(IntStackFrame* frame)
@@ -53,18 +56,10 @@ void kpanic(IntStackFrame* frame)
 	StackFrame* stack;
 	asm volatile("movq %%rbp, %0" : "=g"(stack)::"memory");
 
-	InitTerminal();
-	for(int y = 0; y < term_height; y++)
-	{
-		for(int x = 0; x < term_width; x++)
-		{
-			kp_print(" ");
-		}
-	}
-
-	InitTerminal();
+	kp_print("\n\n");
+	
 	char* message[] = {
-		"      ,---'~-_       Something's gone wrong...              ", "\n",
+		"      ,---'~-_       Something's gone wrong...              ", "\n",	// Panic art!
 		"      |~-_    '~-,                                          ", "\n",
 		"    I |   ~-+---'|   +---+  +---+  |    |  ---+---  +----  |", "\n",
 		"    Y |     |    |   |   |  |   |  ||   |     |     |      |", "\n",
@@ -131,6 +126,8 @@ void kpanic(IntStackFrame* frame)
 		kp_print("\n");
 		stack = stack->rbp;	// Here!
 	}
+
+	kp_print("\nYour OS has reached an unrecoverable execution state and will no longer be responsive. Turn it off and on again?");
 
 	asm volatile("cli");
 	asm volatile("hlt");
