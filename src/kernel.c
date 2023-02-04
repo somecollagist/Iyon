@@ -4,26 +4,22 @@
 #include <drivers/screen.h>
 #include <drivers/terminal.h>
 
-// Kernel entry point from BOOTBOOT
-void _start()
-{
-	init();
+#include <bootboot.h>
 
-	int x = 12/0;
-	
-	while(true);
-}
+extern BOOTBOOT bootboot;					// See bootboot.h
 
-// Super hacky solution to get around multicore BOOTBOOT
-bool initflipped = false;
 void init()
 {
-	if(initflipped) return;
-	initflipped = true;	// Lock other cores from running this
 	InitScreen();
 	InitTerminal();
 	print_prc("Booting Iyon...\n");
 	InitGDT();
 	InitIDT();
 	InitIRQ();
+	while(true){}
+}
+
+void main()
+{
+	while(true){}
 }
