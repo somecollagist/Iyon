@@ -13,11 +13,12 @@ Contributions are very welcome to the project!
 To start contributing, run `setup-(your_os).sh` from the `setup` directory - this should install all the necessary packages and build environments required. From there, write whatever changes you want and run `make build` to compile the source code or `make run` to run the compiled OS. Alternatively, just run `make` to do both in one go.
 
 While development is pretty open-ended, there are a few stylistic points to be adhered to:
-- Use standard British English
-- Use tabs (indent by 4 spaces)
-- No langauges other than C and Assembly are to be used (AT&T syntax)
-- C header files use `#pragma once` as guards
-- Use LF, not CRLF
+- Use standard British English. (We are on team [Oxford Comma](https://www.grammarly.com/blog/what-is-the-oxford-comma-and-why-do-people-care-so-much-about-it/))
+- Use tabs. (Indent by 4 spaces)
+- No langauges other than C and Assembly are to be used unless **absolutely** necessary. (NASM syntax for assembly files)
+- C header files use `#pragma once` as guards. (None of the `#infdef`)
+- Use LF, not CRLF. (Check this if you're on windows!!)
+- If in doubt, just look at what everyone else does.
 
 Here's a couple ideas of what to add to maybe get you started:
 - Setup scripts for Windows, OSX, or your linux distro.
